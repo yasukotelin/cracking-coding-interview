@@ -8,34 +8,28 @@ func canConvert(s1, s2 string) bool {
 		return true
 	}
 
-	var hash map[rune]int
-	if s1 > s2 {
-		hash = makeHash(s2)
-		diffCnt := 0
-		for _, r := range s1 {
-			_, ok := hash[r]
-			if !ok {
-				diffCnt++
-				if diffCnt > 1 {
-					return false
-				}
-			}
-		}
-		return true
+	var shorter string
+	var longer string
+	if len(s1) > len(s2) {
+		shorter = s2
+		longer = s1
 	} else {
-		hash = makeHash(s1)
-		diffCnt := 0
-		for _, r := range s2 {
-			_, ok := hash[r]
-			if !ok {
-				diffCnt++
-				if diffCnt > 1 {
-					return false
-				}
+		shorter = s1
+		longer = s2
+	}
+
+	hash := makeHash(longer)
+	diffCnt := 0
+	for _, r := range shorter {
+		_, ok := hash[r]
+		if !ok {
+			diffCnt++
+			if diffCnt > 1 {
+				return false
 			}
 		}
-		return true
 	}
+	return true
 }
 
 func makeHash(s string) map[rune]int {
