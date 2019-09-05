@@ -36,7 +36,24 @@ func (sl *SingleList) Add(value int) {
 	}
 }
 
+func (sl *SingleList) AddNode(node *Node) {
+	if sl.Head == nil {
+		sl.Head = node
+		sl.Tail = node
+	} else {
+		sl.Tail.Next = node
+		sl.Tail = node
+	}
+}
+
 type Node struct {
 	Next  *Node
 	Value int
+}
+
+func NewNode(v int) *Node {
+	return &Node{
+		Next: nil,
+		Value: v,
+	}
 }
